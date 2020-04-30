@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scale-nginx
+  namespace: keda-scale
+spec:
+  selector:
+    matchLabels:
+      app: scale-nginx
+  template:
+    metadata:
+      labels:
+        app: scale-nginx
+    spec:
+      containers:
+        - name: scale-nginx
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+          envFrom:
+            - secretRef:
+                name: account-secret
